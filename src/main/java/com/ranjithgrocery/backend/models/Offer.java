@@ -11,7 +11,8 @@ public class Offer {
     @Id
     private String id;
     private String itemId;
-    private Double discountPercent; // Optional
-    private Double discountFixed; // Optional
-    private LocalDate validUntil;
+    private String discountType; // PERCENTAGE or FIXED
+    private Double discountValue;
+    private LocalDate startDate;
+    private LocalDate endDate;
 }

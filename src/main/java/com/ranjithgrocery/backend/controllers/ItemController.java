@@ -44,7 +44,7 @@ public class ItemController {
             @RequestParam(value = "files", required = false) MultipartFile[] files) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
-        mapper.findAndRegisterModules(); // Support for LocalDate
+        mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
         Item item = mapper.readValue(itemData, Item.class);
 
         List<String> imageUrls = new ArrayList<>();
@@ -69,12 +69,13 @@ public class ItemController {
         return itemRepository.findById(id).map(existingItem -> {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                mapper.findAndRegisterModules();
+                mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
                 Item updatedData = mapper.readValue(itemData, Item.class);
                 
                 existingItem.setName(updatedData.getName());
                 existingItem.setPrice(updatedData.getPrice());
                 existingItem.setQuantity(updatedData.getQuantity());
+                existingItem.setUnit(updatedData.getUnit());
                 existingItem.setCategory(updatedData.getCategory());
                 existingItem.setManufactureDate(updatedData.getManufactureDate());
                 existingItem.setExpiryDate(updatedData.getExpiryDate());

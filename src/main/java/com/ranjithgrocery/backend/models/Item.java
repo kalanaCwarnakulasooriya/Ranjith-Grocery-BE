@@ -15,6 +15,7 @@ public class Item {
     private String name;
     private Double price;
     private Integer quantity; // stock
+    private String unit; // e.g. grams, kg, L, ml, pcs
     private String category;
     private LocalDate manufactureDate;
     private LocalDate expiryDate;

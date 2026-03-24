@@ -34,4 +34,16 @@ public class OfferController {
         offerRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/admin/offers/{id}")
+    public ResponseEntity<Offer> updateOffer(@PathVariable String id, @RequestBody Offer offerUpdates) {
+        return offerRepository.findById(id).map(existingOffer -> {
+            existingOffer.setItemId(offerUpdates.getItemId());
+            existingOffer.setDiscountType(offerUpdates.getDiscountType());
+            existingOffer.setDiscountValue(offerUpdates.getDiscountValue());
+            existingOffer.setStartDate(offerUpdates.getStartDate());
+            existingOffer.setEndDate(offerUpdates.getEndDate());
+            return ResponseEntity.ok(offerRepository.save(existingOffer));
+        }).orElse(ResponseEntity.notFound().build());
+    }
 }
