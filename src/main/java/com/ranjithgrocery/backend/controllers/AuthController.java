@@ -82,4 +82,16 @@ public class AuthController {
 
         return ResponseEntity.ok("User registered successfully");
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser() {
+        var auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || auth instanceof org.springframework.security.authentication.AnonymousAuthenticationToken) {
+            return ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).body("Not authenticated");
+        }
+        java.util.Map<String, Object> details = new java.util.HashMap<>();
+        details.put("username", auth.getName());
+        details.put("authorities", auth.getAuthorities());
+        return ResponseEntity.ok(details);
+    }
 }

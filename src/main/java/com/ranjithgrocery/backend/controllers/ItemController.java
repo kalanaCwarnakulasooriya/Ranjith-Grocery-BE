@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*")
 public class ItemController {
 
     @Autowired
@@ -60,7 +59,7 @@ public class ItemController {
         return ResponseEntity.ok(savedItem);
     }
 
-    @PutMapping("/admin/items/{id}")
+    @PostMapping("/admin/items/{id}")
     public ResponseEntity<Item> updateItem(
             @PathVariable String id,
             @RequestParam("itemData") String itemData,
